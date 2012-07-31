@@ -9,6 +9,7 @@ CoffeeScript, Node and Redis used (and kick ass, yap!)
 
 To install:
 
+	npm install coffee-script -g
 	git clone git://github.com/Meettya/node-url-shortener.git
 	cd node-url-shortener
 	npm install .
