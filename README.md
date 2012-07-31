@@ -7,6 +7,12 @@ Simple and really fast URL shortener
 
 CoffeeScript, Node and Redis used (and kick ass, yap!)
 
+To install:
+
+	git clone git://github.com/Meettya/node-url-shortener.git
+	cd node-url-shortener
+	npm install .
+
 
 To start:
 

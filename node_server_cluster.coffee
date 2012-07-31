@@ -73,7 +73,7 @@ else
 
       if short_url
 
-        res_string = "Get: Short for #{long_url} is #{node_server}#{short_url}"
+        res_string = "Short for #{long_url} is #{node_server}#{short_url}"
         res.send res_string, {'Content-Type':'text/html; charset=utf-8'}, 200
 
       else 
@@ -82,7 +82,7 @@ else
           short_url = b62.encode url_number
           redis_client.mset [ url_hash, short_url, short_url, long_url ], (err, result) ->
             
-            res_string = "Build: Short for #{long_url} is #{node_server}#{short_url}"
+            res_string = "Short for #{long_url} is #{node_server}#{short_url}"
             res.send res_string, {'Content-Type':'text/html; charset=utf-8'}, 200
 
 
