@@ -46,11 +46,12 @@ redis_client.on "error", (err) -> console.log "Error #{err}"
 
 # index page generator
 app.get '/', (req, res) ->
+  res.set 'Content-Type', 'text/html'
   long_url = req.param 'url'
 
   # nothing to do, send index and brake
   unless long_url
-    res.send index, {'Content-Type':'text/html; charset=utf-8'}, 200
+    res.send 200, index
     return
 
   # hm, we are have some work today
@@ -60,8 +61,7 @@ app.get '/', (req, res) ->
 
     if short_url
 
-      res_string = "Redis: Short for #{long_url} is #{node_server}#{short_url}"
-      res.send res_string, {'Content-Type':'text/html; charset=utf-8'}, 200
+      res.send 200, "Redis: Short for #{long_url} is #{node_server}#{short_url}"
 
     else 
       # in some rare cases we are MAY increment counter,
@@ -73,7 +73,7 @@ app.get '/', (req, res) ->
           if data_saved
             
             res_string = "Calculated: Short for #{long_url} is #{node_server}#{new_short_url}"
-            res.send res_string, {'Content-Type':'text/html; charset=utf-8'}, 200
+            res.send 200, res_string
           
           else
             # why it happened?
@@ -82,11 +82,11 @@ app.get '/', (req, res) ->
             redis_client.get url_hash, (err, short_url) ->
               if short_url
                 res_string = "Redis: Short for #{long_url} is #{node_server}#{short_url}"
-                res.send res_string, {'Content-Type':'text/html; charset=utf-8'}, 200
+                res.send 200, res_string
               else 
                 # TODO: add here node error logger
-                err_string = "Internal Server Error"
-                res.send err_string, {'Content-Type' : 'text/plain'}, 500
+                res.set 'Content-Type', 'text/plain'
+                res.send 500, 'Internal Server Error'
 
 # URL redirector
 app.get '/:short_url', (req, res, next) ->
@@ -100,13 +100,14 @@ app.get '/:short_url', (req, res, next) ->
     # should be 
     #   res.redirect long_url, 301
     # but crashes and I dont know why :(
-    res.redirect long_url
+    res.redirect 301, long_url
 
 
 
 # 404 for others
 app.get '*', (req, res) ->
-  res.send 'Not found', {'Content-Type' : 'text/plain'}, 404
+  res.set 'Content-Type', 'text/plain'
+  res.send 404, 'Not found'
 
 
 console.log "-> Start server on #{node_server}"
