@@ -22,7 +22,7 @@ To start:
 
 **! UWAGA !**
 
-cluster script use naive CPU number detection, if you PC use HT it will be better to manually reduce workers by 2
+cluster script use naive CPU number detection, if yours PC use HT it will be better to manually reduce workers by 2
 
 For benchmarking: `ab -n 10000 -c 500 -k http://localhost:3000/?url=$RANDOM`
 
